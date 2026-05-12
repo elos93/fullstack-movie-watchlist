@@ -72,58 +72,69 @@ function MovieAdd() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Add Movie</h1>
-        <p className="mt-1 text-gray-600">Add a movie with title, genre and description.</p>
+      <div className="mb-8">
+        <p className="mb-2 text-sm font-bold uppercase tracking-wide text-red-400">Create watch item</p>
+        <h1 className="text-4xl font-black text-white md:text-5xl">Add New Movie</h1>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-300">
+          Fill in the details, generate a short description if you want, then save the movie.
+        </p>
       </div>
 
-      <form className="max-w-2xl rounded-lg border border-gray-200 bg-white p-6 shadow-sm" onSubmit={handleSubmit}>
+      <form
+        className="max-w-3xl rounded-[2rem] border border-white/15 bg-white/92 p-6 text-zinc-950 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:p-8"
+        onSubmit={handleSubmit}
+      >
         <div>
-          <label className="mb-2 block font-semibold text-gray-800" htmlFor="title">
-            Title
+          <label className="mb-2 block text-sm font-black text-zinc-900" htmlFor="title">
+            Movie Title
           </label>
           <input
-            className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+            className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none transition placeholder:text-zinc-400 focus:border-red-600 focus:bg-white focus:ring-4 focus:ring-red-600/10"
             id="title"
+            placeholder="e.g. The Matrix"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
           />
         </div>
 
-        <div className="mt-4">
-          <label className="mb-2 block font-semibold text-gray-800" htmlFor="genre">
+        <div className="mt-5">
+          <label className="mb-2 block text-sm font-black text-zinc-900" htmlFor="genre">
             Genre
           </label>
           <input
-            className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+            className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none transition placeholder:text-zinc-400 focus:border-red-600 focus:bg-white focus:ring-4 focus:ring-red-600/10"
             id="genre"
+            placeholder="e.g. Sci-Fi"
             value={genre}
             onChange={(event) => setGenre(event.target.value)}
           />
         </div>
 
-        <div className="mt-4">
-          <label className="mb-2 block font-semibold text-gray-800" htmlFor="description">
-            Description
+        <div className="mt-5">
+          <label className="mb-2 block text-sm font-black text-zinc-900" htmlFor="description">
+            Short Description
           </label>
-          <button
-            className="mb-3 rounded border border-blue-700 px-4 py-2 font-semibold text-blue-700 hover:bg-blue-50"
-            type="button"
-            onClick={handleGenerateDescription}
-          >
-            Generate Description with AI
-          </button>
           <textarea
-            className="min-h-32 w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+            className="min-h-36 w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none transition placeholder:text-zinc-400 focus:border-red-600 focus:bg-white focus:ring-4 focus:ring-red-600/10"
             id="description"
+            placeholder="Brief summary of the movie..."
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
         </div>
 
-        <button className="mt-5 rounded bg-blue-700 px-5 py-2 font-semibold text-white hover:bg-blue-800">
-          Add Movie
-        </button>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <button
+            className="rounded-2xl border border-zinc-300 bg-white px-5 py-3 text-sm font-black text-zinc-900 transition hover:border-red-600 hover:bg-red-50 hover:text-red-700"
+            type="button"
+            onClick={handleGenerateDescription}
+          >
+            Generate Description with AI
+          </button>
+          <button className="rounded-2xl bg-zinc-950 px-5 py-3 text-sm font-black text-white shadow-[0_16px_35px_rgba(0,0,0,0.25)] transition hover:bg-red-600">
+            Add Movie
+          </button>
+        </div>
       </form>
     </div>
   );

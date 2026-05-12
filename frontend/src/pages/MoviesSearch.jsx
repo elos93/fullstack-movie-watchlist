@@ -16,26 +16,30 @@ function MoviesSearch() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Search Movies</h1>
-        <p className="mt-1 text-gray-600">Results update while you type.</p>
+      <div className="mb-8">
+        <p className="mb-2 text-sm font-bold uppercase tracking-wide text-red-400">Find movies</p>
+        <h1 className="text-4xl font-black text-white md:text-5xl">Search Movies</h1>
+        <p className="mt-3 text-sm text-zinc-300">Results update while you type.</p>
       </div>
 
       <input
-        className="mb-6 w-full max-w-2xl rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+        className="mb-8 w-full max-w-3xl rounded-3xl border border-white/15 bg-white/92 px-5 py-4 text-sm text-zinc-950 shadow-[0_24px_80px_rgba(0,0,0,0.28)] outline-none backdrop-blur-xl transition placeholder:text-zinc-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/20"
         placeholder="Search by movie title"
         value={name}
         onChange={(event) => setName(event.target.value)}
       />
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {movies.map((movie) => (
-          <div key={movie._id} className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-            <h2 className="text-xl font-bold text-gray-900">{movie.title}</h2>
-            <p className="mt-2 inline-block rounded bg-blue-50 px-2 py-1 text-sm font-semibold text-blue-700">
+          <div
+            key={movie._id}
+            className="rounded-[2rem] border border-white/15 bg-white/92 p-6 text-zinc-950 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl"
+          >
+            <h2 className="text-2xl font-black leading-tight text-zinc-950">{movie.title}</h2>
+            <p className="mt-3 inline-block rounded-full bg-red-600 px-3 py-1 text-xs font-black text-white shadow-[0_10px_25px_rgba(220,38,38,0.28)]">
               {movie.genre}
             </p>
-            <p className="mt-3 text-gray-700">{movie.description}</p>
+            <p className="mt-4 text-sm leading-6 text-zinc-600">{movie.description}</p>
           </div>
         ))}
       </div>
