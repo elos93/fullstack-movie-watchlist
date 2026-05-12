@@ -4,8 +4,8 @@ Simple full stack movie watchlist project built with Node.js, Express, MongoDB, 
 
 ## Links
 
-- Frontend link: add deployed frontend link here
-- Backend link: add deployed backend link here
+- Frontend link: https://movie-watchlist-frontend-seven.vercel.app
+- Backend link: https://movie-watchlist-backend-navy.vercel.app
 
 ## Project Structure
 
@@ -97,4 +97,4 @@ The backend has a `POST /movies/generate` endpoint. It receives a movie title an
 
 On the `/add-movie` page, the `Generate Description with AI` button fills the description field. The generated description is not saved automatically to MongoDB. The movie is saved only when the user clicks `Add Movie`.
 
-AI was also used as a development assistant while building this project. The code was reviewed and tested manually against the exam requirements.
+AI was also used as a development assistant for project structure, debugging, API integration, deployment fixes, and README updates. The code was reviewed and tested manually against the exam requirements.
