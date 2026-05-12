@@ -27,9 +27,8 @@ async function connectToMongoDB() {
   await mongoConnectionPromise;
 }
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173'
-}));
+app.use(cors());
+app.options('*', cors());
 app.use(express.json());
 
 app.use('/movies', async (req, res, next) => {
