@@ -1,10 +1,12 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 async function readResponse(response) {
-  const data = await response.json();
+  const contentType = response.headers.get('content-type') || '';
+  const text = await response.text();
+  const data = text && contentType.includes('application/json') ? JSON.parse(text) : null;
 
   if (!response.ok) {
-    throw new Error(data.message || 'Request failed');
+    throw new Error(data?.message || text || 'Request failed');
   }
 
   return data;
