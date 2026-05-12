@@ -57,12 +57,12 @@ router.post('/generate', async (req, res) => {
   try {
     const { title, genre } = req.body;
 
-    if (!title || !genre) {
+    if (typeof title !== 'string' || typeof genre !== 'string' || !title.trim() || !genre.trim()) {
       return res.status(400).json({ message: 'Title and genre are required' });
     }
 
     if (!process.env.AI_GATEWAY_API_KEY) {
-      return res.status(500).json({ message: 'AI_GATEWAY_API_KEY is missing' });
+      return res.status(500).json({ message: 'AI Gateway API key is missing' });
     }
 
     if (!process.env.AI_GATEWAY_MODEL) {
@@ -86,7 +86,7 @@ router.post('/generate', async (req, res) => {
           },
           {
             role: 'user',
-            content: `Create a short movie description for a movie titled "${title}" in the "${genre}" genre. The description must be 200 characters or less.`
+            content: `Create a short movie description for a movie titled "${title.trim()}" in the "${genre.trim()}" genre. The description must be 200 characters or less.`
           }
         ]
       })
