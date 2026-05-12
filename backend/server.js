@@ -8,11 +8,42 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+let mongoConnectionPromise = null;
+
+async function connectToMongoDB() {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (!mongoConnectionPromise) {
+    mongoConnectionPromise = mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000
+    }).catch((error) => {
+      mongoConnectionPromise = null;
+      throw error;
+    });
+  }
+
+  await mongoConnectionPromise;
+}
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173'
 }));
 app.use(express.json());
+
+app.use('/movies', async (req, res, next) => {
+  if (req.path === '/generate') {
+    return next();
+  }
+
+  try {
+    await connectToMongoDB();
+    next();
+  } catch (error) {
+    res.status(500).json({ message: 'MongoDB connection error' });
+  }
+});
 
 app.use('/movies', movieRoutes);
 
@@ -20,13 +51,17 @@ app.get('/', (req, res) => {
   res.json({ message: 'Movie Watchlist API is running' });
 });
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+if (!process.env.VERCEL) {
+  connectToMongoDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.error('MongoDB connection error:', error.message);
     });
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error:', error.message);
-  });
+}
+
+export default app;
+export { connectToMongoDB };
