@@ -1,4 +1,12 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '');
+
+function getApiUrl(path) {
+  if (!API_URL) {
+    throw new Error('VITE_API_URL is missing');
+  }
+
+  return `${API_URL}${path}`;
+}
 
 async function readResponse(response) {
   const contentType = response.headers.get('content-type') || '';
@@ -13,12 +21,12 @@ async function readResponse(response) {
 }
 
 export async function getMovies() {
-  const response = await fetch(`${API_URL}/movies`);
+  const response = await fetch(getApiUrl('/movies'));
   return readResponse(response);
 }
 
 export async function addMovie(movie) {
-  const response = await fetch(`${API_URL}/movies`, {
+  const response = await fetch(getApiUrl('/movies'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -30,7 +38,7 @@ export async function addMovie(movie) {
 }
 
 export async function deleteMovie(id) {
-  const response = await fetch(`${API_URL}/movies/${id}`, {
+  const response = await fetch(getApiUrl(`/movies/${id}`), {
     method: 'DELETE'
   });
 
@@ -38,12 +46,13 @@ export async function deleteMovie(id) {
 }
 
 export async function searchMovies(name) {
-  const response = await fetch(`${API_URL}/movies/search?name=${encodeURIComponent(name)}`);
+  const query = encodeURIComponent(name);
+  const response = await fetch(getApiUrl(`/movies/search?name=${query}`));
   return readResponse(response);
 }
 
 export async function generateDescription(title, genre) {
-  const response = await fetch(`${API_URL}/movies/generate`, {
+  const response = await fetch(getApiUrl('/movies/generate'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
